@@ -40,10 +40,19 @@ pipeline {
 
             agent { label 'agent_uat' }
             steps {
-                sh 'docker stop anakdevops'
-                sh 'docker rm anakdevops'
-                sh 'docker run -d --name anakdevops -p 8344:8080 anakdevops/java-pipeline:$DOCKER_TAG'
-            }
+        script {
+          def containerExists = sh(returnStdout: true, script: 'docker ps -a | grep -q anakdevops').trim()
+          if (!containerExists) {
+            echo "Container 'anakdevops' tidak ditemukan. Melakukan 'docker run'..."
+            sh 'docker run -d --name anakdevops -p 8344:8080 anakdevops/java-pipeline:$DOCKER_TAG'
+          } else {
+            echo "Container 'anakdevops' ditemukan. stop dan hapus"
+            sh 'docker stop anakdevops'
+            sh 'docker rm anakdevops'
+            sh 'docker run -d --name anakdevops -p 8344:8080 anakdevops/java-pipeline:$DOCKER_TAG'
+          }
+        }
+}
         }
     }
 
