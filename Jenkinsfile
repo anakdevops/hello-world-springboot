@@ -41,8 +41,8 @@ pipeline {
             agent { label 'agent_uat' }
             steps {
     script {
-        def containerExists = sh(returnStatus: true, script: 'docker ps -a | grep anakdevops').status == 0
-        if (!containerExists) {
+        def containerExists = sh(script: 'docker ps -a | grep anakdevops', returnStatus: true)
+        if (containerExists == 0) {
             echo "Container 'anakdevops' tidak ditemukan. Melakukan 'docker run'..."
             sh 'docker run -d --name anakdevops -p 8344:8080 anakdevops/java-pipeline:$DOCKER_TAG'
         } else {
