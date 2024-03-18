@@ -23,7 +23,7 @@ pipeline {
         }
         stage('Build tag and push') {
             steps {
-                sh 'docker tag anakdevops:v1 anakdevops/java-pipeline:$DOCKER_TAG'
+                sh 'docker tag anakdevops:$DOCKER_TAG anakdevops/java-pipeline:$DOCKER_TAG'
                 sh 'docker push anakdevops/java-pipeline:$DOCKER_TAG'
             }
         }
