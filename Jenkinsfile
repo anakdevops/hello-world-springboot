@@ -5,7 +5,7 @@ pipeline {
     }
 
     stages {
-        stage('Checkout external proj') {
+        stage('Clone & compile') {
             steps {
                 git branch: 'main',
                     url: 'https://github.com/anakdevops/hello-world-springboot.git'
@@ -29,8 +29,8 @@ pipeline {
         }
         stage('Deploy') {
             input {
-                message "Shall we deploy uat?"
-                ok "Please go ahead"
+                message "Deploy ke uat?"
+                ok "Ya"
             }
 
             agent { label 'agent_uat' }
