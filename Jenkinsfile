@@ -27,6 +27,11 @@ pipeline {
                 sh 'docker push anakdevops/java-pipeline:$DOCKER_TAG'
             }
         }
+        stage('Cleanup') {
+      steps {
+        cleanWs()  // Cleans workspace after all previous stages
+      }
+    }
         stage('Deploy') {
             input {
                 message "Deploy ke uat?"
@@ -42,10 +47,6 @@ pipeline {
         }
     }
 
-    post { 
-        always { 
-            cleanWs()
-        }
-    }
+   
     
 }
