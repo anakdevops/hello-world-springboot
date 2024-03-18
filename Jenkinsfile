@@ -9,13 +9,8 @@ pipeline {
             steps {
                 git branch: 'main',
                     url: 'https://github.com/anakdevops/hello-world-springboot.git'
-
                 sh "ls -lat"
                 sh "mvn clean package"
-                script {
-                    def branchName = sh(returnStdout: true, script: 'git rev-parse --abbrev-ref HEAD').trim()
-                    echo "Branch name: ${branchName}"
-                }
             }
         }
         
