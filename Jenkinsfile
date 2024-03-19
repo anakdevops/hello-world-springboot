@@ -25,6 +25,13 @@ pipeline {
                 sh 'docker push anakdevops/java-pipeline:$DOCKER_TAG'
             }
         }
+        steps {
+               script {
+                  sh 'docker stop anakdevops || true' 
+                  sh 'docker rm anakdevops || true'   
+                  sh 'docker run -d --name anakdevops -p 8333:8080 anakdevops/java-pipeline:$DOCKER_TAG'
+             }
+           }
         stage('Cleanup') {
              steps {
                 cleanWs()  // Cleans workspace after all previous stages
@@ -41,7 +48,7 @@ pipeline {
                script {
                   sh 'docker stop anakdevops || true' 
                   sh 'docker rm anakdevops || true'   
-                  sh 'docker run -d --name anakdevops -p 8344:8080 anakdevops/java-pipeline:$DOCKER_TAG'
+                  sh 'docker run -d --name anakdevops -p 8444:8080 anakdevops/java-pipeline:$DOCKER_TAG'
              }
            }
         }
