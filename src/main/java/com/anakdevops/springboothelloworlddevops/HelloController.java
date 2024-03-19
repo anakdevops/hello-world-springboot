@@ -8,7 +8,7 @@ public class HelloController {
 
 	@GetMapping("/")
 	public String index() {
-		return "Hello world (Run Build 54)";
+		return "Hello world (image tag v3)";
 	}
 
 }
